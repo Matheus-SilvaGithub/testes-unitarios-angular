@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalcularoraService {
+  loggerService: any;
 
-  constructor() {}  
+  constructor(loggerService: LoggerService) {}  
 
   calcular(operacao: string, num1: number, num2: number): number {
     switch (operacao) {
@@ -16,12 +18,10 @@ export class CalcularoraService {
       case 'multiplicacao':
         return num1 * num2;
       case 'divisao':
-        if (num2 === 0) {
-          throw new Error('Divisão por zero não é permitida.');
-        }
         return num1 / num2;
       default:
-        throw new Error('Operação inválida.');
+        this.loggerService.log(`Operação inválida1: ${operacao}`);
+        return 0;      
     }
   }
   
